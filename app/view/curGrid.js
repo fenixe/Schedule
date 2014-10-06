@@ -91,7 +91,6 @@ Ext.define('DWork.view.curGrid', {
                 if (selection) {
                     Ext.getCmp('curGrid').getStore().remove(selection);
                     Ext.getCmp('curGrid').getStore().sync();
-
                 }
             }
         }
