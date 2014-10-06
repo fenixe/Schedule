@@ -60,6 +60,7 @@ $cursor = $schedule_coll->find($sort_arr);
 $temp_array = iterator_to_array($cursor, false)[0];
 $work_week = $temp_array['work_week'];
 $rules_array = $temp_array['rules'];
+print_r($rules_array);
 
 //foreach ($teach_plan as $arr){
     print $teach_plan[0]['teachName'];
@@ -73,7 +74,7 @@ $rules_array = $temp_array['rules'];
     $teach_rules = $teach[0]['teachRules'];
     foreach ($teach_rules as $rule_arr){
         print_r($rule_arr);
-        foreach ($rule_arr as $day => $val )
+        foreach ($rule_arr as $day => $val );
 
     }
 ///}
@@ -103,9 +104,9 @@ $size_teach_plan = sizeof($teach_plan);
 //file_put_contents($rules_tmp_name, json_encode($rules_array));
 
 
-//file_put_contents("C:\\work.json", json_encode($work_week));
-//file_put_contents("C:\\rules.json", json_encode($rules_array));
-//file_put_contents("C:\\plan.json", json_encode(change_id_plan($teach_plan), JSON_UNESCAPED_UNICODE));
+file_put_contents("C:\\work.json", json_encode($work_week));
+file_put_contents("C:\\rules.json", json_encode(generate_full_rules_array($rules_array),JSON_UNESCAPED_UNICODE) );
+file_put_contents("C:\\plan.json", json_encode(change_id_plan($teach_plan), JSON_UNESCAPED_UNICODE));
 
 
 //$private_id = session_id();
