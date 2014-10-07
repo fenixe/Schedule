@@ -11,10 +11,10 @@ Ext.define('DWork.view.mainPanel', {
         {
             //xtype: 'curform'
             //xtype: 'studentform'
-            xtype : 'teacherform'
+            //xtype : 'teacherform'
             //xtype : 'lessonsgrid'
             //xtype : 'schedulerulesform'
-
+            xtype : 'schedulemain'
         }
     ]
 });

@@ -1,10 +1,10 @@
 function schedule_render(val) {
-    if (!val) return val;
+ /*   if (!val) return val;
     var record = Ext.getStore('curGridStore').getById(val);
     var lessonName = record.get('lessonName');
     var subType = record.get('subType');
     var teachName = record.get('teachName');
-    return '<div style="word-wrap: : normal   !important;"><strong>'+lessonName + '</strong></br>' + subType + '</br>'  + teachName + '</div>'
+    return '<div style="word-wrap: : normal   !important;"><strong>' + lessonName + '</strong></br>' + subType + '</br>' + teachName + '</div>'*/
 }
 
 Ext.define('DWork.view.scheduleRulesGrid', {
@@ -50,8 +50,8 @@ Ext.define('DWork.view.scheduleRulesGrid', {
             {
                 xtype: 'rownumberer',
                 renderer: function(value, metaData, record, rowIdx, colIdx, store) {
-                    return '<div style="text-align: center !important;" >'+record.data.numLesson + "</div>";
-                }
+                 return '<div style="text-align: center !important;" >'+record.data.numLesson + "</div>";
+                 }
             },
             {
                 defaults: {

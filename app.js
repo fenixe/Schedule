@@ -55,7 +55,7 @@ Ext.application({
     appFolder: 'app',
 
     stores: [ 'curGridStore', 'teacherStore', 'lessonsStore', 'studentStore', 'teacherLessonStore', 'scheduleRulesStore', 'teacherRulesStore'],
-    views: ['navPanel', 'mainPanel', 'curriculumForm', 'curGrid', 'teacherForm', 'teacherGrid', 'studentGrid', 'studentForm',
+    views: ['navPanel', 'mainPanel', 'scheduleMain', 'generatRulesGrid', 'curriculumForm', 'curGrid', 'teacherForm', 'teacherGrid', 'studentGrid', 'studentForm',
         'teacherLessonGrid', 'gridPickerNewTeach', 'gridPickerUpdateTeach', 'lessonsGrid', 'scheduleRulesGrid',
         'scheduleRulesForm', 'lessonCombo' , 'teacherRulesGrid', 'gridPickerNewTeachRules', 'gridPickerUpdateTeachRules'],
 
