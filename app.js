@@ -3,6 +3,44 @@ Ext.require([
     'Ext.form.*'
 ]);
 
+function load_curriculum(storeName, formName){
+    var form = formName.getForm().getValues();
+    Ext.getStore(storeName).load(
+        {
+            params: {
+                institute: form['institute'],
+                flow: form['flow'],
+                semester: form['semester'],
+                year: form['year'],
+                course: form['course']
+            }
+        }
+    );
+}
+
+function load_schedule_rules(storeMainName, storeName, formName) {
+
+    var form = formName.getForm().getValues();
+
+
+    Ext.getStore(storeMainName).load(
+        {
+            params: {
+                institute: form['institute'],
+                flow: form['flow'],
+                semester: form['semester'],
+                year: form['year'],
+                course: form['course']
+            },
+            callback: function (records, operation, success) {
+                if (success) {
+                    load_curriculum(storeName, formName);
+                }
+            }
+        }
+    );
+}
+
 var typeStore = Ext.create('Ext.data.Store', {
     sorters: {
         property: 'text'
@@ -55,8 +93,8 @@ Ext.application({
     appFolder: 'app',
 
     stores: [ 'curGridStore', 'teacherStore', 'lessonsStore', 'studentStore', 'teacherLessonStore', 'scheduleRulesStore', 'teacherRulesStore'],
-    views: ['navPanel', 'mainPanel', 'scheduleMain', 'generatRulesGrid', 'curriculumForm', 'curGrid', 'teacherForm', 'teacherGrid', 'studentGrid', 'studentForm',
-        'teacherLessonGrid', 'gridPickerNewTeach', 'gridPickerUpdateTeach', 'lessonsGrid', 'scheduleRulesGrid',
+    views: ['navPanel', 'mainPanel', 'scheduleMain', 'generatRulesForm', 'curriculumForm', 'curGrid', 'teacherForm', 'teacherGrid', 'studentGrid', 'studentForm',
+        'teacherLessonGrid', 'gridPickerNewTeach', 'gridPickerUpdateTeach', 'lessonsGrid', 'scheduleRulesGrid','generatRulesGrid',
         'scheduleRulesForm', 'lessonCombo' , 'teacherRulesGrid', 'gridPickerNewTeachRules', 'gridPickerUpdateTeachRules'],
 
     launch: function () {

@@ -1,194 +1,229 @@
-function load_curriculum(storeName, formName){
-    var form = formName.getForm().getValues();
-    Ext.getStore(storeName).load(
+Ext.define('DWork.view.generatRulesGrid', {
+    extend: 'Ext.grid.Panel',
+    alias: 'widget.generatrulesgrid',
+    id: 'generatRulesGrid',
+    title: 'Учебный план',
+    store: 'curGridStore',
+    flex: 2,
+    columnLine: true,
+    border: false,
+    multiSelect: true,
+    autoDestroy: true,
+    autoScroll: true,
+    forceFit: true,
+    listeners: {
+        afterrender: function (el) {
+            var form = el.up('form').getForm().getValues();
+            el.getStore().load(
+                { params: {
+                    institute: form['institute'],
+                    flow: form['flow'],
+                    semester: form['semester'],
+                    year: form['year'],
+                    course: form['course']
+                }}
+            );
+        }
+    },
+    plugins: [
         {
-            params: {
-                institute: form['institute'],
-                flow: form['flow'],
-                semester: form['semester'],
-                year: form['year'],
-                course: form['course']
+            ptype: 'rowediting',
+            clicksToEdit: 2,
+            cancelBtnText: 'Отмена',
+            saveBtnText: 'Сохранить',
+            errorSummary: false,
+            listeners: {
+                edit: function (editor, context) {
+                    context.grid.getStore().sync();
+                },
+                canceledit: function (editor, context) {
+                    if (context.record.phantom) {
+                        context.grid.getStore().remove(context.record);
+                    }
+                }
             }
         }
-    );
-}
-
-Ext.define('DWork.view.generatRulesGrid', {
-    extend: 'Ext.form.Panel',
-    id: 'generetRulesGrid',
-    alias: 'widget.generatrulesgrid',
-    frame: true,
-    defaults: {
-        border: false,
-        split: true
-    },
-    layout: 'border',
-    items: [
+    ],
+    tbar: [
         {
-            xtype: 'fieldset',
-            layout: 'hbox',
-            defaults: {
-                frame: true,
-                width: 280,
-                margin: '15 5 5 0',
-                labelWidth: 80,
-                labelAlign: 'left'
-            },
-            maxHeight: 100,
-            minHeight: 100,
-            collapsible: true,
-            region: 'north',
-            items: [
-                {
-                    items: [
-                        {
-                            fieldLabel: 'Учебный год',
-                            xtype: 'numberfield',
-                            name: 'year',
-                            minValue: 2010,
-                            maxValue: 2100,
-                            value: new Date().getFullYear(),
-                            allowBlank: false,
-                            blankText: 'Поле пустое',
-                            listeners: {
-                                change: function (el) {
-                                    load_curriculum('curGridStore' ,el.up('form'));
-                                }
-                            }
-                        },
-                        {
-                            fieldLabel: 'Институт',
-                            xtype: 'combobox',
-                            store: comboStore,
-                            typeAhead: true,
-                            minChars: 0,
-                            value: 'ИПСА',
-                            valueField: 'text',
-                            displayField: 'text',
-                            typeAheadDelay: 10,
-                            autoSelect: true,
-                            name: 'institute',
-                            validateBlank: true,
-                            allowBlank: false,
-                            blankText: 'Поле пустое',
-                            listeners: {
-                                render: function(c) {
-                                    new Ext.ToolTip({
-                                        target: c.getEl(),
-                                        html: 'Выбрать учебный план для данного института.<br>Пустое значение выбирает для все институтов'
-                                    });
-                                },
-                                change: function (el) {
-                                    load_curriculum('curGridStore' ,el.up('form'));
-                                }
-                            },
-                            validator: function (val) {
-                                var me = this;
-                                var indRecord = me.getStore().find(me.valueField, val);
-                                if (Ext.isEmpty(val) || !(indRecord < 0)) {
-                                    return true;
-                                }
-                                return "Несуществующие значение";
-                            }
+            xtype: 'button',
+            text: 'Создать запись',
+            iconCls: 'icon-add',
+            handler: function () {
+                var form = Ext.getCmp('curriculumForm').getForm();
+                var formValue = Ext.getCmp('curriculumForm').getForm().getValues();
+                if (form.isValid()) {
+                    var roweditor = Ext.getCmp('curGrid').getPlugin('rowEditingCur');
+                    roweditor.cancelEdit();
+                    var r = Ext.create('DWork.model.curGridModel', {
+                        institute: formValue['institute'],
+                        flow: formValue['flow'],
+                        semester: formValue['semester'],
+                        year: formValue['year'],
+                        course: formValue['course'],
+                        employDuration: formValue['employDuration']
+                    });
+                    Ext.getCmp('curGrid').getStore().insert(0, r);
+                    roweditor.startEdit(0, 0);
+                } else {
+                    var message = '';
+                    Ext.Object.getKeys(formValue).forEach(function (rec, id, ert) {
+                        if (Ext.isEmpty(formValue[rec])) {
+                            var fieldLabel = form.findField(rec).fieldLabel;
+                            message += '<li style="margin-left: 15%; list-style-type: none;">"' + fieldLabel + '"</li>';
                         }
-                    ]
-                },
-                {
-                    items: [
-                        {
-                            fieldLabel: 'Семестр',
-                            xtype: 'numberfield',
-                            name: 'semester',
-                            value: 1,
-                            minValue: 1,
-                            maxValue: 2,
-                            allowBlank: false,
-                            blankText: 'Поле пустое',
-                            listeners: {
-                                change: function (el) {
-                                    load_curriculum('curGridStore' ,el.up('form'));
-                                }
-                            }
-                        },
-                        {
-                            fieldLabel: 'Поток',
-                            xtype: 'combobox',
-                            store: flowStore,
-                            typeAhead: true,
-                            minChars: 0,
-                            value: 'Системы искусственного интилекта',
-                            valueField: 'text',
-                            displayField: 'text',
-                            typeAheadDelay: 10,
-                            autoSelect: true,
-                            name: 'flow',
-                            validateBlank: true,
-                            allowBlank: false,
-                            blankText: 'Поле пустое',
-                            listeners: {
-                                change: function (el) {
-                                    load_curriculum('curGridStore' ,el.up('form'));
-                                }
-                            },
-                            validator: function (val) {
-                                var me = this;
-                                var indRecord = me.getStore().find(me.valueField, val);
-                                if (Ext.isEmpty(val) || !(indRecord < 0)) {
-                                    return true;
-                                }
-                                return "Несуществующие значение";
-                            }
-                        }
-                    ]
-                },
-                {
-                    items: [
-                        {
-                            fieldLabel: 'Курс',
-                            xtype: 'numberfield',
-                            name: 'course',
-                            value: 1,
-                            minValue: 1,
-                            maxValue: 6,
-                            allowBlank: false,
-                            blankText: 'Поле пустое',
-                            listeners: {
-                                change: function (el) {
-                                    load_curriculum('curGridStore' ,el.up('form'));
-                                }
-                            }
-                        },
-                        {
-                            fieldLabel: 'Длительность занятия',
-                            xtype: 'numberfield',
-                            name: 'employDuration',
-                            allowDecimals: true,
-                            value: 1.5,
-                            decimalPrecision: 1,
-                            allowBlank: false,
-                            blankText: 'Поле пустое'
-                        }
-                    ]
+                    });
+                    Ext.Msg.alert('Пустое поле(-я)', 'Данные поле(-я) не заполнены :  <b>' + message + '</b>');
                 }
-            ]
+            }
         },
         {
-            width: '100%',
-            region: 'center',
-            //xtype: 'curgrid'
+            xtype: 'button',
+            text: 'Удалить запись',
+            iconCls: 'icon-delete',
+            handler: function () {
+                var selection = Ext.getCmp('curGrid').getView().getSelectionModel().getSelection();
+                if (selection) {
+                    Ext.getCmp('curGrid').getStore().remove(selection);
+                    Ext.getCmp('curGrid').getStore().sync();
+                }
+            }
         }
-    ]/*,
-     buttons: [
-     {
-     text: 'Сохранить',
-     iconCls: 'icon-save',
-     action: 'clear',
-     handler: function (el) {
-     //var form = el.up().up().getForm();
-     //if (form.isValid()) {
-     Ext.getStore('curGridStore').sync();
-     //}
-     }
-     }
-     ]*/
+    ],
+    columns: [
+        {
+            text: 'Название предмета',
+            dataIndex: 'lessonName',
+            flex: 1,
+            tooltip: 'Перечень предметов учебного плана',
+            editor: {
+                xtype: 'combobox',
+                store: 'lessonsStore',
+                displayField: 'lessonName',
+                itemId: 'lessonName',
+                valueField: 'lessonName',
+                typeAhead: true,
+                minChars: 0,
+                triggerAction: 'query',
+                typeAheadDelay: 10,
+                autoSelect: true,
+                validateBlank: true,
+                emptyText: 'Выбрать предмет для учебного плана',
+                trigger2Cls: 'x-form-clear-trigger',
+                onTrigger2Click: function () {
+                    var me = this;
+                    me.clearValue();
+                },
+                onTriggerClick: function () {
+                    var me = this;
+                    if (!me.readOnly && !me.disabled) {
+                        if (me.isExpanded) {
+                            me.collapse();
+                        } else {
+                            var teachName = me.up().down('#teachName').value;
+                            me.getStore().load({
+                                params: {teacher: teachName},
+                                callback: function (rec, oper, success) {
+                                    if (success) {
+                                        me.expand()
+                                    }
+                                }
+                            });
+                        }
+                        me.inputEl.focus();
+                    }
+                },
+                validator: function (val) {
+                    var me = this;
+                    var indRecord = me.getStore().find(me.valueField, val);
+                    if (Ext.isEmpty(val) || !(indRecord < 0)) {
+                        return true;
+                    }
+                    return "Несуществующие значение";
+                }
+            }
+        },
+        {
+            text: 'Тип предмета',
+            dataIndex: 'subType',
+            flex: 0.5,
+            editor: {
+                xtype: 'combobox',
+                store: typeStore,
+                typeAhead: true,
+                minChars: 0,
+                typeAheadDelay: 10,
+                autoSelect: true,
+                emptyText: 'Выбрать форму провидения урока'
+            }
+        },
+        {
+            text: 'Преподователь',
+            dataIndex: 'teachName',
+            flex: 1,
+            editor: {
+                xtype: 'combo',
+                store: 'teacherStore',
+                itemId: 'teachName',
+                displayField: 'teachName',
+                typeAhead: true,
+                valueNotFoundText: 'no data',
+                minChars: 0,
+                typeAheadDelay: 10,
+                triggerAction: 'query',
+                autoSelect: true,
+                emptyText: 'Выбрать преподователя',
+                trigger2Cls: 'x-form-clear-trigger',
+                onTrigger2Click: function () {
+                    var me = this;
+                    me.clearValue();
+                },
+                onTriggerClick: function () {
+                    var me = this;
+                    if (!me.readOnly && !me.disabled) {
+                        if (me.isExpanded) {
+                            me.collapse();
+                        } else {
+                            var lessonName = me.up().down('#lessonName').value;
+                            me.getStore().load({
+                                params: {lesson: lessonName},
+                                callback: function (records, operation, success) {
+                                    if (success) {
+                                        me.expand()
+                                    }
+                                }
+                            });
+                        }
+                        me.inputEl.focus();
+                    }
+                },
+                validator: function (val) {
+                    var me = this;
+                    var indRecord = me.getStore().find(me.valueField, val);
+                    if (Ext.isEmpty(val) || !(indRecord < 0)) {
+                        return true;
+                    }
+                    return "Несуществующие значение";
+                }
+            }
+        },
+        {
+            text: 'Колличество часов в семестр',
+            dataIndex: 'hoursSemester',
+            flex: .5,
+            editor: {
+                xtype: 'numberfield',
+                minValue: 0
+            }
+        },
+        {
+            text: 'Максимальное число пар в неделю',
+            dataIndex: 'maxLessWeek',
+            flex: .5,
+            editor: {
+                xtype: 'numberfield',
+                minValue: 0
+            }
+        }
+    ]
 });

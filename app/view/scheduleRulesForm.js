@@ -1,23 +1,3 @@
-function load_schedule_rules(storeMainName, storeName, formName){
-    var form = formName.getForm().getValues();
-    Ext.getStore(storeMainName).load(
-        {
-            params: {
-                institute: form['institute'],
-                flow: form['flow'],
-                semester: form['semester'],
-                year: form['year'],
-                course: form['course']
-            },
-            callback: function(records, operation, success) {
-                if (success){
-                    load_curriculum(storeName, formName);
-                }
-            }
-        }
-    );
-
-}
 Ext.define('DWork.view.scheduleRulesForm', {
     extend: 'Ext.form.Panel',
     id: 'scheduleRulesForm',
@@ -54,7 +34,7 @@ Ext.define('DWork.view.scheduleRulesForm', {
                             blankText: 'Поле пустое',
                             listeners: {
                                 change: function (el) {
-                                    load_schedule_rules('curGridStore','scheduleRulesStore' ,el.up('form'));
+                                    load_schedule_rules('curGridStore', 'scheduleRulesStore', el.up('form'));
                                 }
                             }
                         },
@@ -81,7 +61,7 @@ Ext.define('DWork.view.scheduleRulesForm', {
                                     });
                                 },
                                 change: function (el) {
-                                    load_schedule_rules('curGridStore','scheduleRulesStore' ,el.up('form'));
+                                    load_schedule_rules('curGridStore', 'scheduleRulesStore', el.up('form'));
                                 }
                             },
                             validator: function (val) {
@@ -108,7 +88,7 @@ Ext.define('DWork.view.scheduleRulesForm', {
                             blankText: 'Поле пустое',
                             listeners: {
                                 change: function (el) {
-                                    load_schedule_rules('curGridStore','scheduleRulesStore' ,el.up('form'));
+                                    load_schedule_rules('curGridStore', 'scheduleRulesStore', el.up('form'));
                                 }
                             }
                         },
@@ -129,7 +109,7 @@ Ext.define('DWork.view.scheduleRulesForm', {
                             blankText: 'Поле пустое',
                             listeners: {
                                 change: function (el) {
-                                    load_schedule_rules('curGridStore','scheduleRulesStore' ,el.up('form'));
+                                    load_schedule_rules('curGridStore', 'scheduleRulesStore', el.up('form'));
                                 }
                             },
                             validator: function (val) {
@@ -156,7 +136,7 @@ Ext.define('DWork.view.scheduleRulesForm', {
                             blankText: 'Поле пустое',
                             listeners: {
                                 change: function (el) {
-                                    load_schedule_rules('curGridStore','scheduleRulesStore' ,el.up('form'));
+                                    load_schedule_rules('curGridStore', 'scheduleRulesStore', el.up('form'));
                                 }
                             }
                         },
@@ -178,11 +158,11 @@ Ext.define('DWork.view.scheduleRulesForm', {
                             xtype: 'numberfield',
                             fieldLabel: 'Кол-во пар в день',
                             minValue: 1,
-                            itemId : 'numLess',
+                            itemId: 'numLess',
                             maxValue: 8,
                             listeners: {
-                                afterrender : function(el){
-                                    Ext.getStore('scheduleRulesStore').on('load', function(store, records){
+                                afterrender: function (el) {
+                                    Ext.getStore('scheduleRulesStore').on('load', function (store, records) {
                                         el.setValue(records.length);
                                     });
                                 },
@@ -191,7 +171,7 @@ Ext.define('DWork.view.scheduleRulesForm', {
                                     var size = grid.getStore().count();
                                     var formValue = el.up('form').getForm().getValues();
                                     if (newValue > size) {
-                                        var  arr = [];
+                                        var arr = [];
                                         for (var i = size; i < newValue; i++) {
                                             var r = Ext.create('DWork.model.scheduleRulesModel', {
                                                 institute: formValue['institute'],
@@ -199,7 +179,7 @@ Ext.define('DWork.view.scheduleRulesForm', {
                                                 semester: formValue['semester'],
                                                 year: formValue['year'],
                                                 course: formValue['course'],
-                                                numLesson: i+1
+                                                numLesson: i + 1
                                             });
                                             arr.push(r);
                                         }
@@ -246,10 +226,10 @@ Ext.define('DWork.view.scheduleRulesForm', {
                                             });
                                         fields.push(
                                             new Ext.data.Field(
-                                                { name: 'week-1:saturday', type: 'string'}
+                                                {name: 'week-1:saturday', type: 'string'}
                                             ),
                                             new Ext.data.Field(
-                                                { name: 'week-2:saturday', type: 'string'}
+                                                {name: 'week-2:saturday', type: 'string'}
                                             ));
                                         model.setFields(fields);
 

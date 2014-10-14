@@ -58,7 +58,7 @@ if ($_GET['crud'] == 'read') {
     array_push($out_result, $el);
     to_json($out_result);
 
-} else if ($_GET['crud'] == 'update') {
+} else if ($_GET['crud'] == 'update' ) {
     $get_json = $HTTP_RAW_POST_DATA;
     $get_objects = object_to_array(json_decode($get_json));
     $out_result = array();

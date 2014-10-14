@@ -160,6 +160,18 @@
     border-bottom-color: #EDEDED;
 }
 
+.x-column-header-inner .x-column-header-text {
+    white-space: normal;
+}
+
+.x-column-header-inner {
+    line-height: normal;
+    padding-top: 3px !important;
+    padding-bottom: 3px !important;
+    text-align: center;
+    top: 20%;
+}
+
 .x-grid-row .x-grid-cell {
     border-right: 1px solid #D0D0D0;
 }

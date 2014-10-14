@@ -33,7 +33,7 @@ Ext.define('DWork.view.navPanel', {
                 Ext.getCmp('mainPanel').removeAll();
                 Ext.getCmp('mainPanel').setTitle('Учебное расписание');
                 Ext.getCmp('mainPanel').add(
-                    Ext.create('DWork.view.scheduleRulesForm')
+                   // Ext.create('DWork.view.scheduleRulesForm')
                 );
             }
 
