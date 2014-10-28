@@ -93,8 +93,8 @@ Ext.application({
     appFolder: 'app',
 
     stores: [ 'curGridStore', 'teacherStore', 'lessonsStore', 'studentStore', 'teacherLessonStore', 'scheduleRulesStore', 'teacherRulesStore'],
-    views: ['navPanel', 'mainPanel', 'scheduleMain', 'generatRulesForm', 'curriculumForm', 'curGrid', 'teacherForm', 'teacherGrid', 'studentGrid', 'studentForm',
-        'teacherLessonGrid', 'gridPickerNewTeach', 'gridPickerUpdateTeach', 'lessonsGrid', 'scheduleRulesGrid','generatRulesGrid',
+    views: ['navPanel', 'mainPanel', 'scheduleMain', 'generateRulesForm', 'curriculumForm', 'curGrid', 'teacherForm', 'teacherGrid', 'studentGrid', 'studentForm',
+        'teacherLessonGrid', 'gridPickerNewTeach', 'gridPickerUpdateTeach', 'lessonsGrid', 'scheduleRulesGrid','generateRulesGrid',
         'scheduleRulesForm', 'lessonCombo' , 'teacherRulesGrid', 'gridPickerNewTeachRules', 'gridPickerUpdateTeachRules'],
 
     launch: function () {

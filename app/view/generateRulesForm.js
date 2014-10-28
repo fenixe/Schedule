@@ -1,7 +1,7 @@
-Ext.define('DWork.view.generatRulesForm', {
+Ext.define('DWork.view.generateRulesForm', {
     extend: 'Ext.form.Panel',
-    id: 'generatRulesForm',
-    alias: 'widget.generatrulesform',
+    id: 'generateRulesForm',
+    alias: 'widget.generaterulesform',
     frame: true,
     minWidth: 500,
     collapsible: true,
@@ -154,7 +154,7 @@ Ext.define('DWork.view.generatRulesForm', {
         {
             width: '100%',
             region: 'center',
-            xtype: 'generatrulesgrid'
+            xtype: 'generaterulesgrid'
         }
     ]
 });

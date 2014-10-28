@@ -39,7 +39,7 @@ Ext.define('DWork.view.scheduleRulesGrid', {
     listeners: {
         afterrender: function (el) {
             var storeName = el.getStore().storeId;
-            var form = Ext.ComponentQuery.query("generatrulesform")[0];
+            var form = Ext.ComponentQuery.query("generaterulesform")[0];
             load_schedule_rules('curGridStore', storeName, form);
         }
     },
@@ -60,7 +60,7 @@ Ext.define('DWork.view.scheduleRulesGrid', {
                 change: function (el, newValue) {
                     var grid = el.up().up();
                     var size = grid.getStore().count();
-                    var formValue = Ext.ComponentQuery.query("generatrulesform")[0].getForm().getValues();
+                    var formValue = Ext.ComponentQuery.query("generaterulesform")[0].getForm().getValues();
                     if (newValue > size) {
                         var arr = [];
                         for (var i = size; i < newValue; i++) {

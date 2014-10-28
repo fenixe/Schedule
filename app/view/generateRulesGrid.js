@@ -1,7 +1,7 @@
-Ext.define('DWork.view.generatRulesGrid', {
+Ext.define('DWork.view.generateRulesGrid', {
     extend: 'Ext.grid.Panel',
-    alias: 'widget.generatrulesgrid',
-    id: 'generatRulesGrid',
+    alias: 'widget.generaterulesgrid',
+    id: 'generateRulesGrid',
     title: 'Учебный план',
     store: 'curGridStore',
     flex: 2,
@@ -208,21 +208,11 @@ Ext.define('DWork.view.generatRulesGrid', {
             }
         },
         {
-            text: 'Колличество часов в семестр',
-            dataIndex: 'hoursSemester',
-            flex: .5,
-            editor: {
-                xtype: 'numberfield',
-                minValue: 0
-            }
-        },
-        {
-            text: 'Максимальное число пар в неделю',
-            dataIndex: 'maxLessWeek',
-            flex: .5,
-            editor: {
-                xtype: 'numberfield',
-                minValue: 0
+            text : "Желательные дни провидения зантий",
+            dataIndex : "daysRules",
+            width : 150,
+            editor : {
+                xtype: 'gridpickerupdateteachrules'
             }
         }
     ]

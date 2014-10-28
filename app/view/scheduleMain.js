@@ -12,7 +12,7 @@ Ext.define('DWork.view.scheduleMain',{
         flex : 1,
         title : 'Панель ограничений для преподователя и предмета',
         region : 'west',
-        xtype : 'generatrulesform'
+        xtype : 'generaterulesform'
     },{
         flex : 1,
         title : 'Панель жестких ограничений для предмета',
