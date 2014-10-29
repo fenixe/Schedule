@@ -17,7 +17,8 @@ bootstrap.css
 .LSOverride
 
 # Icon must end with two \r
-Icon
+Icon
+
 
 # Thumbnails
 ._*
@@ -60,3 +61,7 @@ j._0
 lsn
 workspace.xml
 
+*.1
+*.2
+.idea/vcs.xml
+.idea/vcs.xml
