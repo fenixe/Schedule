@@ -19,10 +19,7 @@ function load_curriculum(storeName, formName){
 }
 
 function load_schedule_rules(storeMainName, storeName, formName) {
-
     var form = formName.getForm().getValues();
-
-
     Ext.getStore(storeMainName).load(
         {
             params: {
@@ -95,7 +92,7 @@ Ext.application({
     stores: [ 'curGridStore', 'teacherStore', 'lessonsStore', 'studentStore', 'teacherLessonStore', 'scheduleRulesStore', 'teacherRulesStore'],
     views: ['navPanel', 'mainPanel', 'scheduleMain', 'generateRulesForm', 'curriculumForm', 'curGrid', 'teacherForm', 'teacherGrid', 'studentGrid', 'studentForm',
         'teacherLessonGrid', 'gridPickerNewTeach', 'gridPickerUpdateTeach', 'lessonsGrid', 'scheduleRulesGrid','generateRulesGrid',
-        'scheduleRulesForm', 'lessonCombo' , 'teacherRulesGrid', 'gridPickerNewTeachRules', 'gridPickerUpdateTeachRules'],
+         'lessonCombo' , 'teacherRulesGrid', 'gridPickerNewTeachRules', 'gridPickerUpdateTeachRules'],
 
     launch: function () {
         Ext.create('Ext.container.Viewport', {

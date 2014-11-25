@@ -18,6 +18,7 @@ Ext.define('DWork.view.scheduleRulesGrid', {
     autoDestroy: false,
     autoScroll: true,
     forceFit: true,
+    width : 150,
     plugins: [
         {
             ptype: 'cellediting',
@@ -77,6 +78,7 @@ Ext.define('DWork.view.scheduleRulesGrid', {
                         grid.getStore().insert(i, arr);
                     } else if (newValue < size) {
                         for (var i = size; i >= newValue; i--) {
+
                             grid.getStore().removeAt(i);
                         }
                     }

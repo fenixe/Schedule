@@ -1,22 +1,29 @@
-Ext.define('DWork.view.scheduleMain',{
-    extend : 'Ext.panel.Panel',
-    alias : 'widget.schedulemain',
-    frame : true,
+Ext.define('DWork.view.scheduleMain', {
+    extend: 'Ext.panel.Panel',
+    alias: 'widget.schedulemain',
+    frame: true,
     //height : '100%',
-    layout : 'border',
-    defaults :{
-        border : false,
-        split : true
+    layout: {
+        type: 'hbox',
+        pack: 'start',
+        align: 'stretch'
     },
-    items : [{
-        flex : 1,
-        title : 'Панель ограничений для преподователя и предмета',
-        region : 'west',
-        xtype : 'generaterulesform'
+    defaults: {
+        border: false,
+        split: true
+    },
+    items: [{
+        flex: 1,
+        title: 'Панель ограничений для преподователя и предмета',
+        region: 'west',
+        xtype: 'generaterulesform'
+    }, {
+        region: 'center',
+        xtype: 'splitter'
     },{
         flex : 1,
-        title : 'Панель жестких ограничений для предмета',
-        region : 'center',
-        xtype : 'schedulerulesgrid'
+        title: 'Панель жестких ограничений для конкретного предмета',
+        region: 'east',
+        xtype: 'schedulerulesgrid'
     }]
 });

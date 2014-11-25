@@ -97,7 +97,7 @@ if ($_GET['crud'] == 'read') {
     }
 
     foreach ($data as $el) {
-        $collection->update(array(), array('$pull' => array('rules' => array('_id' => $el['_id']))));
+        $collection->update(array(), array('$pull' => array('rules' => array('_id' => new MongoId($el['_id'])))));
     }
     print '{"success":true }';
 }

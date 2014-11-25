@@ -1,5 +1,7 @@
 <?php
 
+ini_set('display_errors', 'Off');
+
 $DB = 'diplom';
 $curr_collection = 'curriculum';
 $less_collection = 'lessons';
